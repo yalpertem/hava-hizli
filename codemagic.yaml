@@ -7,7 +7,6 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.yalpertem.havahizli
-        automatic_signing: true        
       vars:
         XCODE_WORKSPACE: "ios/Runner.xcworkspace"
         APP_STORE_APP_ID: 6749032305 # <-- Put the app id number here. This is found in App Store Connect > App > General > App Information
