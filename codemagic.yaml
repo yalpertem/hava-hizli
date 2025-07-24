@@ -1,0 +1,23 @@
+workflows:
+  ios-release:
+    name: iOS Release (auto-sign)
+    environment:
+      flutter: stable           # Codemagic’in “stable” Flutter SDK’sı
+      xcode: 16.4               # Temmuz 2025 itibarıyla varsayılan sürüm
+      groups:
+        - ios_signing           # 3. adımda oluşturduğun env group
+    scripts:
+      - name: Flutter clean & get
+        script: |
+          flutter clean
+          flutter pub get
+      - name: Build IPA
+        script: |
+          flutter build ipa --release \
+            --export-options-plist=/tmp/exportOptions.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration       # “Integrations”ta eklediğin anahtarı kullanır
+        submit_to_testflight: true
