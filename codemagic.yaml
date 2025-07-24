@@ -8,6 +8,8 @@ workflows:
     environment:
       flutter: stable
       xcode: 16.4
+      groups:
+        - ios
 
     scripts:
       - name: Build IPA
