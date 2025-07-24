@@ -10,9 +10,9 @@ workflows:
       vars:
         XCODE_WORKSPACE: "ios/Runner.xcworkspace"
         APP_STORE_APP_ID: 6749032305 # <-- Put the app id number here. This is found in App Store Connect > App > General > App Information
-        XCODE_SCHEME: _   # <-- Put Your Xcode scheme here
+        XCODE_SCHEME: Runner   # <-- Put Your Xcode scheme here
         BUNDLE_ID: com.yalpertem.havahizli
-        ENTRY_POINT: _    # <-- Put Your Entry point to your flutter application here        
+        ENTRY_POINT: lib/main.dart    # <-- Put Your Entry point to your flutter application here        
       flutter: stable
       xcode: 16.4
       cocoapods: default      
