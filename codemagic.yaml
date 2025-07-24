@@ -4,22 +4,43 @@ workflows:
     integrations:
       app_store_connect: codemagic-key
     environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.yalpertem.havahizli
+      vars:
+        XCODE_WORKSPACE: "ios/Runner.xcworkspace"
+        APP_STORE_APP_ID: 6749032305 # <-- Put the app id number here. This is found in App Store Connect > App > General > App Information
+        XCODE_SCHEME: _   # <-- Put Your Xcode scheme here
+        BUNDLE_ID: com.yalpertem.havahizli
+        ENTRY_POINT: _    # <-- Put Your Entry point to your flutter application here        
       flutter: stable
       xcode: 16.4
+      cocoapods: default      
       groups:
         - ios
     scripts:
-      - name: Set up signing
+      - name: Get Flutter Packages
         script: |
-          keychain initialize
-          app-store-connect fetch-signing-files \
-            com.yalpertem.havahizli \
-            --type IOS_APP_STORE \
-            --create-resource
-          keychain add-certificates
-      - name: Build IPA
-        script: flutter build ipa --release
+          flutter packages pub get
+      - name: Pod install
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+      - name: Set up code signing settings on Xcode project
+        script: |
+          xcode-project use-profiles
+      - name: Flutter build ipa and automatic versioning
+        script: |
+          flutter build ipa --release \
+          --build-name=1.0.0 \
+          --export-options-plist=/Users/builder/export_options.plist \
+          --flavor="$XCODE_SCHEME"
     publishing:
+      email:
+        recipients:
+          - yalpertem@gmail.com
+        notify:
+          success: true
+          failure: true    
       app_store_connect:
         auth: integration
         submit_to_testflight: true
