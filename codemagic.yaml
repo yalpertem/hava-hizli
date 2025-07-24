@@ -1,23 +1,22 @@
 workflows:
   ios-release:
     name: iOS Release (auto-sign)
+
+    integrations:
+      app_store_connect: codemagic-key   # UI’de eklediğiniz API anahtarının "Name" alanı
+
     environment:
-      flutter: stable           # Codemagic’in “stable” Flutter SDK’sı
-      xcode: 16.4               # Temmuz 2025 itibarıyla varsayılan sürüm
+      flutter: stable
+      xcode: 16.4
       groups:
-        - ios_signing           # 3. adımda oluşturduğun env group
+        - ios_signing
+
     scripts:
-      - name: Flutter clean & get
-        script: |
-          flutter clean
-          flutter pub get
       - name: Build IPA
-        script: |
-          flutter build ipa --release \
-            --export-options-plist=/tmp/exportOptions.plist
-    artifacts:
-      - build/ios/ipa/*.ipa
+        script: flutter build ipa --release
+
     publishing:
       app_store_connect:
-        auth: integration       # “Integrations”ta eklediğin anahtarı kullanır
+        auth: integration        # artık entegrasyon ismi biliniyor
         submit_to_testflight: true
+
