@@ -12,6 +12,13 @@ workflows:
         - ios
 
     scripts:
+      - name: Set up signing
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files \
+            --type IOS_APP_STORE \
+            --bundle-id com.yalpertem.havahizli
+          keychain add-certificates    
       - name: Build IPA
         script: flutter build ipa --release
 
