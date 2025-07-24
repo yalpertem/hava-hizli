@@ -1,29 +1,25 @@
 workflows:
   ios-release:
     name: iOS Release (auto-sign)
-
     integrations:
-      app_store_connect: codemagic-key        # UI’deki entegrasyon adı
-
+      app_store_connect: codemagic-key
     environment:
       flutter: stable
       xcode: 16.4
       groups:
-        - ios                                 # App Store değişkenlerinin bulunduğu grup
-
+        - ios
     scripts:
       - name: Set up signing
         script: |
           keychain initialize
-          app-store-connect fetch-signing-files "com.yalpertem.havahizli" \
+          app-store-connect fetch-signing-files \
+            com.yalpertem.havahizli \
             --type IOS_APP_STORE \
-            --create
+            --create-resource
           keychain add-certificates
-          xcode-project use-profiles
       - name: Build IPA
         script: flutter build ipa --release
-
     publishing:
       app_store_connect:
-        auth: integration                      # Issuer / Key / p8 satırları artık gereksiz
+        auth: integration
         submit_to_testflight: true
