@@ -8,8 +8,6 @@ workflows:
     environment:
       flutter: stable
       xcode: 16.4
-      groups:
-        - ios_signing
 
     scripts:
       - name: Build IPA
