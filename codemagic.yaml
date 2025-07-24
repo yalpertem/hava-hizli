@@ -10,9 +10,9 @@ workflows:
       vars:
         XCODE_WORKSPACE: "ios/Runner.xcworkspace"
         APP_STORE_APP_ID: 6749032305 # <-- Put the app id number here. This is found in App Store Connect > App > General > App Information
-        XCODE_SCHEME: Runner   # <-- Put Your Xcode scheme here
+        XCODE_SCHEME: Runner
         BUNDLE_ID: com.yalpertem.havahizli
-        ENTRY_POINT: lib/main.dart    # <-- Put Your Entry point to your flutter application here        
+        ENTRY_POINT: lib/main.dart
       flutter: stable
       xcode: 16.4
       cocoapods: default      
@@ -33,6 +33,9 @@ workflows:
           flutter build ipa --release \
           --build-name=1.0.0 \
           --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa        # IPA dosyası
+      - build/ios/ipa/*.dSYM.zip   # (İsteğe bağlı) dSYM arşivi          
     publishing:
       email:
         recipients:
