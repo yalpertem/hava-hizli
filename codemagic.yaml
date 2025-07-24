@@ -3,7 +3,7 @@ workflows:
     name: iOS Release (auto-sign)
 
     integrations:
-      app_store_connect: codemagic-key   # UI’de eklediğiniz API anahtarının "Name" alanı
+      app_store_connect: codemagic-key   # UI’de eklediğiniz API anahtarının "key" alanı
 
     environment:
       flutter: stable
@@ -17,6 +17,6 @@ workflows:
 
     publishing:
       app_store_connect:
-        auth: integration        # artık entegrasyon ismi biliniyor
+        auth: integration
         submit_to_testflight: true
 
